@@ -18,16 +18,26 @@ function Name() {
   )
 }
 
-function FavoriteAnimal({animal, onAnimalChange}) {
+function FavoriteAnimal({
+  animal,
+  onAnimalChange,
+}: {
+  animal: string
+  onAnimalChange: (newAnimal: string) => void
+}) {
   return (
     <div>
       <label htmlFor="animal">Favorite Animal: </label>
-      <input id="animal" value={animal} onChange={onAnimalChange} />
+      <input
+        id="animal"
+        value={animal}
+        onChange={event => onAnimalChange(event.currentTarget.value)}
+      />
     </div>
   )
 }
 
-function Display({animal}) {
+function Display({animal}: {animal: string}) {
   return <div>{`Your favorite animal is: ${animal}!`}</div>
 }
 
@@ -36,10 +46,7 @@ function App() {
   return (
     <form>
       <Name />
-      <FavoriteAnimal
-        animal={animal}
-        onAnimalChange={event => setAnimal(event.currentTarget.value)}
-      />
+      <FavoriteAnimal animal={animal} onAnimalChange={setAnimal} />
       <Display animal={animal} />
     </form>
   )

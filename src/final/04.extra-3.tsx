@@ -16,7 +16,7 @@ function Board({
   onClick,
 }: {
   squares: Squares
-  onClick: (square: number) => void
+  onClick: (index: number) => void
 }) {
   function renderSquare(i: number) {
     return (
@@ -62,15 +62,15 @@ function App() {
   const nextValue = calculateNextValue(currentSquares)
   const status = calculateStatus(winner, currentSquares, nextValue)
 
-  function selectSquare(square: number) {
-    if (winner || currentSquares[square]) {
+  function selectSquare(index: number) {
+    if (winner || currentSquares[index]) {
       return
     }
 
     const newHistory = history.slice(0, currentStep + 1)
     const squares = [...currentSquares]
 
-    squares[square] = nextValue
+    squares[index] = nextValue
     setHistory([...newHistory, squares])
     setCurrentStep(newHistory.length)
   }

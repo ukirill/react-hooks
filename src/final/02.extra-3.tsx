@@ -16,7 +16,7 @@ function useLocalStorageState(key: string, defaultValue: string = '') {
   return [state, setState] as const
 }
 
-function Greeting({initialName = ''}) {
+function Greeting({initialName = ''}: {initialName?: string}) {
   const [name, setName] = useLocalStorageState('name', initialName)
 
   function handleChange(event: React.SyntheticEvent<HTMLInputElement>) {

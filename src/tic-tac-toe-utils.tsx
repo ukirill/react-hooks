@@ -1,7 +1,11 @@
 type Player = 'X' | 'O'
 type Squares = Array<Player | null>
 
-function calculateStatus(winner: string, squares: Squares, nextValue: Player) {
+function calculateStatus(
+  winner: null | string,
+  squares: Squares,
+  nextValue: Player,
+) {
   return winner
     ? `Winner: ${winner}`
     : squares.every(Boolean)

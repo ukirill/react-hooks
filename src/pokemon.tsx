@@ -8,7 +8,11 @@ const formatDate = (date: Date) =>
     date.getSeconds(),
   ).padStart(2, '0')}.${String(date.getMilliseconds()).padStart(3, '0')}`
 
-// the delay argument is for faking things out a bit
+/**
+ *
+ * @param name the name of the pokemon
+ * @param delay an arbitrary delay (to test loading states). This is optional and defaults to 1500
+ */
 async function fetchPokemon(
   name: string,
   delay: number = 1500,

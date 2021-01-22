@@ -51,7 +51,9 @@ test('can play a game of tic tac toe', () => {
   alfredTip(
     () =>
       expect(
-        JSON.parse(window.localStorage.getItem('tic-tac-toe:history')),
+        JSON.parse(
+          window.localStorage.getItem('tic-tac-toe:history') ?? 'null',
+        ),
       ).toEqual(
         // prettier-ignore
         [
@@ -82,7 +84,9 @@ test('can play a game of tic tac toe', () => {
   alfredTip(
     () =>
       expect(
-        JSON.parse(window.localStorage.getItem('tic-tac-toe:history')),
+        JSON.parse(
+          window.localStorage.getItem('tic-tac-toe:history') ?? 'null',
+        ),
       ).toEqual(
         // prettier-ignore
         [

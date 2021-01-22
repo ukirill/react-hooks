@@ -22,7 +22,7 @@ function Board() {
 
   // This is the function your square click handler will call. `square` should
   // be an index. So if they click the center square, this will be `4`.
-  function selectSquare(square) {
+  function selectSquare(index: number) {
     // 🐨 first, if there's already winner or there's already a value at the
     // given square index (like someone clicked a square that's already been
     // clicked), then return early so we don't make any state changes
@@ -34,7 +34,7 @@ function Board() {
     // 💰 `[...squares]` will do it!)
     //
     // 🐨 set the value of the square that was selected
-    // 💰 `squaresCopy[square] = nextValue`
+    // 💰 `squaresCopy[index] = nextValue`
     //
     // 🐨 set the squares to your copy
   }
@@ -44,7 +44,7 @@ function Board() {
     // 💰 `Array(9).fill(null)` will do it!
   }
 
-  function renderSquare(i) {
+  function renderSquare(i: number) {
     return (
       <button className="square" onClick={() => selectSquare(i)}>
         {squares[i]}

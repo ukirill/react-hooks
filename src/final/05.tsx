@@ -8,11 +8,12 @@ interface HTMLVanillaTiltElement extends HTMLDivElement {
   vanillaTilt: VanillaTilt
 }
 
-function Tilt({children}) {
-  const tiltRef = React.useRef<HTMLVanillaTiltElement>()
+function Tilt({children}: {children: React.ReactNode}) {
+  const tiltRef = React.useRef<HTMLVanillaTiltElement>(null)
 
   React.useEffect(() => {
     const {current: tiltNode} = tiltRef
+    if (tiltNode === null) return
     const vanillaTiltOptions = {
       max: 25,
       speed: 400,

@@ -4,7 +4,7 @@
 import * as React from 'react'
 import VanillaTilt from 'vanilla-tilt'
 
-function Tilt({children}) {
+function Tilt({children}: {children: React.ReactNode}) {
   // 🐨 create a ref here with React.useRef()
 
   // 🐨 add a `React.useEffect` callback here and use VanillaTilt to make your

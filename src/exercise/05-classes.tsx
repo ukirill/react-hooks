@@ -16,6 +16,8 @@ class Tilt extends React.Component {
   tiltRef = React.createRef<HTMLVanillaTiltElement>()
   componentDidMount() {
     const tiltNode = this.tiltRef.current
+    if (!tiltNode) return
+
     const vanillaTiltOptions = {
       max: 25,
       speed: 400,
@@ -25,7 +27,7 @@ class Tilt extends React.Component {
     VanillaTilt.init(tiltNode, vanillaTiltOptions)
   }
   componentWillUnmount() {
-    this.tiltRef.current.vanillaTilt.destroy()
+    this.tiltRef.current?.vanillaTilt.destroy()
   }
   render() {
     return (

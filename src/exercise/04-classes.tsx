@@ -20,19 +20,28 @@ type BoardProps = {}
 type BoardState = {squares: Squares}
 
 class Board extends React.Component<BoardProps, BoardState> {
-  state = {
-    squares:
-      JSON.parse(window.localStorage.getItem('squares')) || Array(9).fill(null),
+  constructor(props: BoardProps) {
+    super(props)
+
+    let squares
+    try {
+      squares = JSON.parse(window.localStorage.getItem('squares') ?? 'null')
+    } catch (error: unknown) {
+      // something is wrong in localStorage, so don't use it
+    }
+    if (!squares) squares = Array(9).fill(null)
+
+    this.state = {squares}
   }
 
-  selectSquare(square: number) {
+  selectSquare(index: number) {
     const {squares} = this.state
     const nextValue = calculateNextValue(squares)
-    if (calculateWinner(squares) || squares[square]) {
+    if (calculateWinner(squares) || squares[index]) {
       return
     }
     const squaresCopy = [...squares]
-    squaresCopy[square] = nextValue
+    squaresCopy[index] = nextValue
     this.setState({squares: squaresCopy})
   }
   renderSquare = (i: number) => (

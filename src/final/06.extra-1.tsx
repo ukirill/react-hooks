@@ -9,10 +9,11 @@ import {
   PokemonForm,
   PokemonDataView,
 } from '../pokemon'
+import type {PokemonData} from '../types'
 
-function PokemonInfo({pokemonName}) {
-  const [pokemon, setPokemon] = React.useState(null)
-  const [error, setError] = React.useState(null)
+function PokemonInfo({pokemonName}: {pokemonName: string}) {
+  const [pokemon, setPokemon] = React.useState<null | PokemonData>(null)
+  const [error, setError] = React.useState<null | Error>(null)
 
   React.useEffect(() => {
     if (!pokemonName) {

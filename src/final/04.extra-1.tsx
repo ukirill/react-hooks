@@ -11,10 +11,21 @@ import {
 import type {Squares} from '../tic-tac-toe-utils'
 
 function Board() {
-  const [squares, setSquares] = React.useState<Squares>(
-    () =>
-      JSON.parse(window.localStorage.getItem('squares')) || Array(9).fill(null),
-  )
+  const [squares, setSquares] = React.useState<Squares>(() => {
+    let localStorageValue
+    try {
+      localStorageValue = JSON.parse(
+        window.localStorage.getItem('squares') ?? 'null',
+      )
+    } catch (error: unknown) {
+      // something is wrong in localStorage, so don't use it
+    }
+    if (localStorageValue) {
+      return localStorageValue
+    } else {
+      return Array(9).fill(null)
+    }
+  })
 
   React.useEffect(() => {
     window.localStorage.setItem('squares', JSON.stringify(squares))
@@ -24,12 +35,12 @@ function Board() {
   const winner = calculateWinner(squares)
   const status = calculateStatus(winner, squares, nextValue)
 
-  function selectSquare(square: number) {
-    if (winner || squares[square]) {
+  function selectSquare(index: number) {
+    if (winner || squares[index]) {
       return
     }
     const squaresCopy = [...squares]
-    squaresCopy[square] = nextValue
+    squaresCopy[index] = nextValue
     setSquares(squaresCopy)
   }
 

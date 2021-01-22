@@ -21,12 +21,12 @@ function Board() {
   const winner = calculateWinner(squares)
   const status = calculateStatus(winner, squares, nextValue)
 
-  function selectSquare(square: number) {
-    if (winner || squares[square]) {
+  function selectSquare(index: number) {
+    if (winner || squares[index]) {
       return
     }
     const squaresCopy = [...squares]
-    squaresCopy[square] = nextValue
+    squaresCopy[index] = nextValue
     setSquares(squaresCopy)
   }
 

@@ -4,6 +4,7 @@
 
 import * as React from 'react'
 import {ErrorBoundary} from 'react-error-boundary'
+import type {FallbackProps} from 'react-error-boundary'
 import {
   fetchPokemon,
   PokemonInfoFallback,
@@ -12,19 +13,16 @@ import {
 } from '../pokemon'
 import type {PokemonData} from '../types'
 
-type PokemonInfoState = {
-  status: 'pending' | 'idle' | 'resolved' | 'rejected'
-  pokemon?: PokemonData
-  error?: Error
-}
+type PokemonInfoState =
+  | {status: 'idle'}
+  | {status: 'pending'}
+  | {status: 'rejected'; error: Error}
+  | {status: 'resolved'; pokemon: PokemonData}
 
-function PokemonInfo({pokemonName}) {
+function PokemonInfo({pokemonName}: {pokemonName: string}) {
   const [state, setState] = React.useState<PokemonInfoState>({
     status: pokemonName ? 'pending' : 'idle',
-    pokemon: null,
-    error: null,
   })
-  const {status, pokemon, error} = state
 
   React.useEffect(() => {
     if (!pokemonName) {
@@ -41,21 +39,21 @@ function PokemonInfo({pokemonName}) {
     )
   }, [pokemonName])
 
-  if (status === 'idle') {
-    return <span>Submit a pokemon</span>
-  } else if (status === 'pending') {
-    return <PokemonInfoFallback name={pokemonName} />
-  } else if (status === 'rejected') {
-    // this will be handled by an error boundary
-    throw error
-  } else if (status === 'resolved') {
-    return <PokemonDataView pokemon={pokemon} />
+  switch (state.status) {
+    case 'idle':
+      return <span>Submit a pokemon</span>
+    case 'pending':
+      return <PokemonInfoFallback name={pokemonName} />
+    case 'rejected':
+      throw state.error
+    case 'resolved':
+      return <PokemonDataView pokemon={state.pokemon} />
+    default:
+      throw new Error('This should be impossible')
   }
-
-  throw new Error('This should be impossible')
 }
 
-function ErrorFallback({error, resetErrorBoundary}) {
+function ErrorFallback({error, resetErrorBoundary}: FallbackProps) {
   return (
     <div role="alert">
       There was an error:{' '}

@@ -30,7 +30,7 @@ test('App works', () => {
   window.localStorage.setItem('name', isSerialized ? '"jill"' : 'jill')
   rerender(<App key="new" />)
   const greetingText = screen.getByText(/hello/i).textContent
-  if (!greetingText.includes('jill')) {
+  if (!greetingText?.includes('jill')) {
     throw new Error(
       `🚨 the app is not initialized with the name that's in localStorage. Make sure useState is called with the value in localStorage.`,
     )
