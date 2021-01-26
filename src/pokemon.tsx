@@ -51,10 +51,10 @@ async function fetchPokemon(
   type JSONResponse = {
     data?: {
       pokemon: Omit<PokemonData, 'fetchedAt'>
-      errors?: Array<{message: string}>
     }
+    errors?: Array<{message: string}>
   }
-  const {data}: JSONResponse = await response.json()
+  const {data, errors}: JSONResponse = await response.json()
   if (response.ok) {
     const pokemon = data?.pokemon
     if (pokemon) {
@@ -66,7 +66,7 @@ async function fetchPokemon(
   } else {
     // handle the graphql errors
     const error = {
-      message: data?.errors?.map(e => e.message).join('\n'),
+      message: errors?.map(e => e.message).join('\n'),
     }
     return Promise.reject(error)
   }
