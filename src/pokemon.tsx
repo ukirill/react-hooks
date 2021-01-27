@@ -65,9 +65,7 @@ async function fetchPokemon(
     }
   } else {
     // handle the graphql errors
-    const error = {
-      message: errors?.map(e => e.message).join('\n'),
-    }
+    const error = new Error(errors?.map(e => e.message).join('\n') ?? 'unknown')
     return Promise.reject(error)
   }
 }
